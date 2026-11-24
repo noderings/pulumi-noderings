@@ -58,7 +58,22 @@ Test zones and servers get random names, and every test destroys what it created
 
 ## Releasing
 
-Push a tag such as `v0.2.0`. The release workflow builds the plugin for every platform, attaches it to a GitHub release, and publishes the SDKs to npm, PyPI and NuGet. The Go SDK is released by tagging `sdk/v0.2.0` on the same commit, which the workflow does too.
+Push a tag such as `v0.2.0`. Two workflows run:
+
+- `release.yml` builds the plugin for every platform, attaches it to a GitHub release, and tags the Go SDK as `sdk/v0.2.0`.
+- `publish-sdks.yml` publishes the SDKs to npm, PyPI and NuGet. It can also be run by hand from the Actions tab with an existing tag.
+
+### One-time registry setup
+
+PyPI and NuGet use [trusted publishing](https://docs.pypi.org/trusted-publishers/): they trust `publish-sdks.yml` in this repository, so no tokens are stored.
+
+| Registry | Setup | Then set |
+|---|---|---|
+| PyPI | Account, then Publishing, then "Add a new pending publisher": project `pulumi-noderings`, owner `noderings`, repository `pulumi-noderings`, workflow `publish-sdks.yml`, environment `pypi` | Repository variable `PYPI_TRUSTED_PUBLISHING` = `true` |
+| NuGet | Account, then Trusted Publishing, then "Add policy": owner `noderings`, repository `pulumi-noderings`, workflow `publish-sdks.yml` | Repository variable `NUGET_USER` = your nuget.org user name |
+| npm | Organization `noderings`, then a granular access token with read and write on its packages | Repository secret `NPM_TOKEN` |
+
+A registry that is not set up is skipped, so the rest still publish.
 
 ## Code of conduct
 
