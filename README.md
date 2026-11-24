@@ -6,7 +6,7 @@
 [![NuGet](https://img.shields.io/nuget/v/NodeRings.Pulumi)](https://www.nuget.org/packages/NodeRings.Pulumi)
 [![Go Reference](https://pkg.go.dev/badge/github.com/noderings/pulumi-noderings/sdk/go/noderings.svg)](https://pkg.go.dev/github.com/noderings/pulumi-noderings/sdk/go/noderings)
 
-The NodeRings provider lets you manage [NodeRings](https://noderings.com) resources with Pulumi. NodeRings is a cloud marketplace: independent hosting providers sell virtual machines and game servers, and you buy and manage them through one account and one API.
+The NodeRings provider lets you manage [NodeRings](https://noderings.com) resources with Pulumi. NodeRings is an infrastructure marketplace: independent hosting providers sell compute, GPU, storage, network and more, and you buy and manage them through one account and one API.
 
 With this provider you can:
 
