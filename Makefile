@@ -91,8 +91,10 @@ build_python:
 build_go:
 	cd sdk && go build ./...
 
+# NuGet only accepts PNG or JPEG icons; codegen copies the schema's SVG logo.
 build_dotnet:
 	cd sdk/dotnet && \
+		cp ../../docs/logo.png logo.png && \
 		echo "$(VERSION)" > version.txt && \
 		dotnet build -c Release /p:Version=$(VERSION)
 
