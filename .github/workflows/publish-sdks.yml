@@ -1,0 +1,112 @@
+# Publishes the SDKs for a release. Runs on every v* tag, and can be run by
+# hand from the Actions tab to (re)publish an existing tag.
+#
+# PyPI and NuGet use trusted publishing: no tokens are stored. Each registry is
+# set up once to trust this workflow file (see CONTRIBUTING.md). npm uses the
+# NPM_TOKEN secret. A registry that is not set up yet is skipped.
+name: Publish SDKs
+
+on:
+  push:
+    tags: ["v*.*.*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to publish, for example v0.1.1
+        required: true
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  PULUMI_SKIP_UPDATE_CHECK: "1"
+  TAG: ${{ inputs.tag || github.ref_name }}
+
+jobs:
+  build:
+    name: Build SDKs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+      - uses: pulumi/actions@v6
+        with:
+          pulumi-version-file: .pulumi-version
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm install -g yarn@1.22.22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install build
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - name: Build
+        run: |
+          make VERSION="${TAG#v}" build_nodejs build_python build_dotnet
+          cd sdk/dotnet && dotnet pack -c Release --no-build /p:Version="${TAG#v}" -o nupkg
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sdks
+          path: |
+            sdk/nodejs/bin
+            sdk/python/bin/dist
+            sdk/dotnet/nupkg
+
+  npm:
+    name: npm
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: sdks
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: https://registry.npmjs.org
+      - name: Publish
+        if: env.NPM_TOKEN != ''
+        working-directory: sdk/nodejs/bin
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  pypi:
+    name: PyPI
+    needs: build
+    if: vars.PYPI_TRUSTED_PUBLISHING == 'true'
+    runs-on: ubuntu-latest
+    environment: pypi
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: sdks
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: sdk/python/bin/dist/
+          skip-existing: true
+
+  nuget:
+    name: NuGet
+    needs: build
+    if: vars.NUGET_USER != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: sdks
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ vars.NUGET_USER }}
+      - run: dotnet nuget push "sdk/dotnet/nupkg/*.nupkg" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
