@@ -17,7 +17,7 @@ This provider is generated from the [NodeRings Terraform provider](https://githu
 
 ## Prerequisites
 
-Go (see `provider/go.mod`), the [Pulumi CLI](https://www.pulumi.com/docs/install/), Node.js 22 with Yarn 1, Python 3.9+ with `pip install build`, and the .NET 8 SDK.
+Go (see `provider/go.mod`), the [Pulumi CLI](https://www.pulumi.com/docs/install/) at the version in `.pulumi-version` (code generation output depends on it), Node.js 22 with Yarn 1, Python 3.9+ with `pip install build`, and the .NET 8 SDK.
 
 ## Making a change
 
