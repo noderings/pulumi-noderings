@@ -1,0 +1,14 @@
+name: noderings-vm-py
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: venv
+description: An hourly VM with a firewall and a DNS record on NodeRings. This orders a billed server.
+config:
+  zone:
+    type: string
+    description: Domain to host, for example example.com.
+  sshPublicKey:
+    type: string
+    description: Public key that may log in as root.

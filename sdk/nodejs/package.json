@@ -1,0 +1,29 @@
+{
+    "name": "@noderings/pulumi",
+    "version": "${VERSION}",
+    "description": "A Pulumi package for ordering and managing virtual machines, DNS, firewalls, game servers and access control on the NodeRings cloud marketplace.",
+    "keywords": [
+        "noderings",
+        "vps",
+        "dns",
+        "category/cloud"
+    ],
+    "homepage": "https://noderings.com",
+    "repository": "https://github.com/noderings/pulumi-noderings",
+    "license": "Apache-2.0",
+    "scripts": {
+        "build": "tsc"
+    },
+    "dependencies": {
+        "@pulumi/pulumi": "^3.269.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20",
+        "typescript": "^4.7.0"
+    },
+    "pulumi": {
+        "resource": true,
+        "name": "noderings",
+        "server": "github://api.github.com/noderings"
+    }
+}

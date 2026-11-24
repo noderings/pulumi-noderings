@@ -1,0 +1,42 @@
+# Builds the provider plugin for every platform Pulumi supports and attaches it
+# to the GitHub release. Pulumi downloads it from there by name:
+# pulumi-resource-noderings-v<version>-<os>-<arch>.tar.gz
+version: 2
+
+project_name: pulumi-resource-noderings
+
+before:
+  hooks:
+    - make provider/cmd/pulumi-resource-noderings/schema-embed.json
+
+builds:
+  - id: provider
+    dir: provider
+    main: ./cmd/pulumi-resource-noderings
+    binary: pulumi-resource-noderings
+    env:
+      - CGO_ENABLED=0
+    goos: [linux, darwin, windows]
+    goarch: [amd64, arm64]
+    ldflags:
+      - -s -w -X github.com/noderings/pulumi-noderings/provider/pkg/version.Version={{ .Version }}
+
+archives:
+  - id: provider
+    formats: [tar.gz]
+    name_template: "{{ .Binary }}-v{{ .Version }}-{{ .Os }}-{{ .Arch }}"
+    files:
+      - none*
+
+checksum:
+  name_template: "pulumi-noderings_{{ .Version }}_checksums.txt"
+
+changelog:
+  disable: true
+
+release:
+  github:
+    owner: noderings
+    name: pulumi-noderings
+  extra_files:
+    - glob: provider/cmd/pulumi-resource-noderings/schema.json
