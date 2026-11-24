@@ -1,21 +1,238 @@
 ---
 title: NodeRings
-meta_desc: Provides an overview of the NodeRings provider for Pulumi.
+meta_desc: Use the Pulumi NodeRings provider to order virtual machines and manage DNS, firewalls, game servers and access control on the NodeRings cloud marketplace.
 layout: package
 ---
 
-The NodeRings provider for Pulumi manages resources on [NodeRings](https://noderings.com), a cloud marketplace where independent hosting providers sell virtual machines and game servers through one account and one API.
+The NodeRings provider for Pulumi lets you manage [NodeRings](https://noderings.com) resources as part of your Pulumi programs. NodeRings is a cloud marketplace where independent hosting providers sell virtual machines and game servers through one account and one API. With this provider you can order servers by size and city, keep DNS zones, records, GeoDNS answers and DNSSEC in code, put firewalls in front of servers, run game servers with their backups and databases, and manage SSH keys, roles, groups and secrets.
 
-With it you can order a virtual machine by size and city and get its address back, keep DNS zones, records, GeoDNS answers and DNSSEC in code, put firewalls in front of servers, run game servers with their backups and databases, and manage service accounts, roles and groups.
+## Installation
 
-The provider needs a NodeRings service account token. See [Installation & Configuration](./installation-configuration/).
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
+{{% choosable language typescript %}}
 
-## Example
+npm:
 
-This program finds the cheapest hourly offer for a 1 vCPU, 1 GB server in Ashburn, orders it with your SSH key, and points `www` at it.
+```bash
+npm install @noderings/pulumi
+```
+
+Yarn:
+
+```bash
+yarn add @noderings/pulumi
+```
+
+pnpm:
+
+```bash
+pnpm add @noderings/pulumi
+```
+
+Bun:
+
+```bash
+bun add @noderings/pulumi
+```
+
+{{% /choosable %}}
+{{% choosable language python %}}
+
+pip:
+
+Add `pulumi-noderings` to `requirements.txt`, then run:
+
+```bash
+pip install -r requirements.txt
+```
+
+uv:
+
+```bash
+uv add pulumi-noderings
+```
+
+Poetry:
+
+```bash
+poetry add pulumi-noderings
+```
+
+{{% /choosable %}}
+{{% choosable language go %}}
+
+```bash
+go get github.com/noderings/pulumi-noderings/sdk/go/noderings
+```
+
+{{% /choosable %}}
+{{% choosable language csharp %}}
+
+```bash
+dotnet add package NodeRings.Pulumi
+```
+
+{{% /choosable %}}
+{{% choosable language java %}}
+
+There is no published Java SDK. Generate one into your project from the provider:
+
+```bash
+pulumi package add noderings
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+
+```bash
+pulumi package add noderings
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+
+Declare the provider in your program, then run `pulumi install`:
+
+```hcl
+terraform {
+  required_providers {
+    noderings = {
+      source  = "noderings/noderings"
+      version = "~> 0.1"
+    }
+  }
+}
+```
+
+```bash
+pulumi install
+```
+
+{{% /choosable %}}
+{{< /chooser >}}
+
+The provider plugin is downloaded from [GitHub releases](https://github.com/noderings/pulumi-noderings/releases) the first time a program uses it.
+
+## Example Usage
+
+This program creates a DNS zone, which is free, and prints the nameservers to set at your registrar.
 
 {{< chooser language "typescript,python,go,csharp,yaml" >}}
+{{% choosable language typescript %}}
 
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as noderings from "@noderings/pulumi";
+
+const zone = new noderings.DnsZone("example", { name: "example.com" });
+
+export const nameservers = zone.nameservers;
+```
+
+{{% /choosable %}}
+{{% choosable language python %}}
+
+```python
+import pulumi
+import pulumi_noderings as noderings
+
+zone = noderings.DnsZone("example", name="example.com")
+
+pulumi.export("nameservers", zone.nameservers)
+```
+
+{{% /choosable %}}
+{{% choosable language go %}}
+
+```go
+package main
+
+import (
+	"github.com/noderings/pulumi-noderings/sdk/go/noderings"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		zone, err := noderings.NewDnsZone(ctx, "example", &noderings.DnsZoneArgs{
+			Name: pulumi.String("example.com"),
+		})
+		if err != nil {
+			return err
+		}
+		ctx.Export("nameservers", zone.Nameservers)
+		return nil
+	})
+}
+```
+
+{{% /choosable %}}
+{{% choosable language csharp %}}
+
+```csharp
+using System.Collections.Generic;
+using Pulumi;
+using NodeRings.Pulumi;
+
+return await Deployment.RunAsync(() =>
+{
+    var zone = new DnsZone("example", new()
+    {
+        Name = "example.com",
+    });
+
+    return new Dictionary<string, object?>
+    {
+        ["nameservers"] = zone.Nameservers,
+    };
+});
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+
+```yaml
+name: noderings-example
+runtime: yaml
+resources:
+  example:
+    type: noderings:DnsZone
+    properties:
+      name: example.com
+outputs:
+  nameservers: ${example.nameservers}
+```
+
+{{% /choosable %}}
+{{< /chooser >}}
+
+Set the token before running `pulumi up`:
+
+```bash
+pulumi config set --secret noderings:token <your-service-account-token>
+```
+
+## Configuration
+
+Create the token in the [NodeRings console](https://noderings.com): open **Organization**, then **Access Control**, then **Service accounts**, create a service account, give it a role, and generate a token. The console shows the token once. Administrator covers everything; a narrower role is enough if a program only manages DNS, for example.
+
+- `token` (Required, Secret) — Service account token. May also be set with the `NODERINGS_TOKEN` environment variable (`NODERINGS_API_TOKEN` and `NR_API_TOKEN` also work).
+- `organizationId` (Optional) — Organization to act in, sent as the `X-Organization-ID` header. Defaults to the token's own organization. May also be set with the `NODERINGS_ORGANIZATION_ID` environment variable.
+- `endpoint` (Optional) — API base URL. Defaults to the public NodeRings API. May also be set with the `NODERINGS_API_URL` environment variable.
+- `maxRetries` (Optional) — How many times to retry rate-limited and transient failures. Defaults to `25`.
+- `requestsPerSecond` (Optional) — Client-side limit on requests per second for each API operation. Defaults to `2`, the API's own limit. Set `0` to disable it.
+- `httpTimeout` (Optional) — Timeout for a single HTTP request, as a duration such as `60s`. Defaults to `60s`.
+- `skipOrganizationCheck` (Optional) — Skip checking the token and organization when the provider starts. Defaults to `false`.
+
+To work in two organizations from one program, create an explicit `noderings.Provider` for each, with its own `token` or `organizationId`, and pass it to resources with the `provider` resource option.
+
+## Order a virtual machine
+
+A plan code such as `SC-GC-1C-1G-20` (shared compute, 1 vCPU, 1 GB RAM, 20 GB disk) is a size that several hosting providers may sell, in several cities, at different prices. `getMarketplaceOffer` returns the cheapest matching offer, or the best rated with `sort: "rating"`, and you can pin one provider with `providerId` or `storefrontSlug`. `billingType: "usage"` asks for hourly billing from prepaid credit, which needs at least $10 available to order.
+
+This program orders the cheapest hourly offer in Ashburn with your SSH key and points `www` at it:
+
+{{< chooser language "typescript,python,go,csharp,yaml" >}}
 {{% choosable language typescript %}}
 
 ```typescript
@@ -60,7 +277,6 @@ export const nameservers = zone.nameservers;
 ```
 
 {{% /choosable %}}
-
 {{% choosable language python %}}
 
 ```python
@@ -97,7 +313,6 @@ pulumi.export("nameservers", zone.nameservers)
 ```
 
 {{% /choosable %}}
-
 {{% choosable language go %}}
 
 ```go
@@ -172,7 +387,6 @@ func main() {
 ```
 
 {{% /choosable %}}
-
 {{% choosable language csharp %}}
 
 ```csharp
@@ -229,7 +443,6 @@ return await Deployment.RunAsync(() =>
 ```
 
 {{% /choosable %}}
-
 {{% choosable language yaml %}}
 
 ```yaml
@@ -283,12 +496,9 @@ outputs:
 ```
 
 {{% /choosable %}}
-
 {{< /chooser >}}
 
-## How ordering works
-
-A plan code such as `SC-GC-1C-1G-20` (shared compute, 1 vCPU, 1 GB RAM, 20 GB disk) is a size that several hosting providers may sell, in several cities, at different prices. `getMarketplaceOffer` returns the cheapest matching offer, or the best rated with `sort: "rating"`, and you can pin one provider with `providerId` or `storefrontSlug`. `billingType: "usage"` asks for hourly billing from prepaid credit. Without it you can get a monthly plan charged to your card.
+The YAML program reads the public key from config: `pulumi config set sshPublicKey "$(cat ~/.ssh/id_ed25519.pub)"`.
 
 The offer lookup runs on every `pulumi up`. If a cheaper offer appears later, `planId` changes and Pulumi plans to replace the server. Add `ignoreChanges: ["planId", "regionId"]` to the server's resource options, or pin the provider, to keep it where it is.
 
@@ -300,7 +510,7 @@ The offer lookup runs on every `pulumi up`. If a cheaper offer appears later, `p
 | `hostname`, `distro`, `sshKeyIds` | New server, unless `reinstallOnChange: true` reinstalls the same one |
 | `planId`, `regionId` | New server. There is no resize |
 
-A replacement deletes the old server, and with it its IP addresses and disk. Set `deletionProtection: true` on anything you pay for monthly: deleting a monthly subscription cancels it with no refund for the rest of the period.
+A replacement deletes the old server, and with it its IP addresses and disk. Set `deletionProtection: true` on anything billed monthly: deleting a monthly subscription cancels it with no refund for the rest of the period. Usage-billed servers stop billing when they are deleted.
 
 ## Resources
 
@@ -312,4 +522,8 @@ A replacement deletes the old server, and with it its IP addresses and disk. Set
 | Game servers | `GameServer`, `GameServerAllocation`, `GameServerBackup`, `GameServerDatabase`, `GameServerSchedule` |
 | Access | `SshKey`, `Role`, `RoleAssignment`, `Group`, `GroupMembership`, `Secret`, `EnvironmentVariable` |
 
-Functions such as `getMarketplaceOffer`, `getMarketplaceOffers`, `getDistros`, `getVirtualMachines` and `getCreditBalance` read the catalog and your account. The full list is in the [API documentation](./api-docs/).
+Functions such as `getMarketplaceOffer`, `getMarketplaceOffers`, `getDistros`, `getVirtualMachines` and `getCreditBalance` read the catalog and your account. Every resource can be adopted with `pulumi import`, for example `pulumi import noderings:index/dnsRecord:DnsRecord www <zone id>/www/A`.
+
+## Rate limits
+
+The NodeRings API allows about two requests per second for each operation. The provider paces itself and retries rate-limited calls, so a large stack takes longer and still finishes.

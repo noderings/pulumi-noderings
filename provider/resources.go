@@ -46,13 +46,13 @@ var metadata []byte
 // Provider returns the Pulumi mapping of the NodeRings Terraform provider.
 func Provider() tfbridge.ProviderInfo {
 	prov := tfbridge.ProviderInfo{
-		P:       pfbridge.ShimProvider(upstream.NewProvider(version.Version)),
+		P:       pfbridge.ShimProvider(upstream.NewProviderWithUserAgent(version.Version, userAgent())),
 		Name:    "noderings",
 		Version: version.Version,
 
 		DisplayName: "NodeRings",
 		Publisher:   "NodeRings",
-		LogoURL:     "https://raw.githubusercontent.com/noderings/pulumi-noderings/main/docs/logo.png",
+		LogoURL:     "https://raw.githubusercontent.com/noderings/pulumi-noderings/main/docs/logo.svg",
 		// Pulumi downloads the provider plugin from this repository's GitHub releases.
 		PluginDownloadURL: "github://api.github.com/noderings",
 		Description:       "A Pulumi package for ordering and managing virtual machines, DNS, firewalls, game servers and access control on the NodeRings cloud marketplace.",
@@ -134,4 +134,10 @@ func docEditRules(defaults []tfbridge.DocsEdit) []tfbridge.DocsEdit {
 			}), nil
 		},
 	})
+}
+
+// userAgent identifies this provider to the NodeRings API, so traffic from
+// Pulumi is not counted as Terraform.
+func userAgent() string {
+	return "pulumi-noderings/" + version.Version + " (+https://www.pulumi.com/registry/packages/noderings/)"
 }

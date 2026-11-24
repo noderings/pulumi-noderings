@@ -1,6 +1,12 @@
 # Changelog
 
-## 0.1.0 (unreleased)
+## 0.1.1
+
+- The provider identifies itself to the NodeRings API as `pulumi-noderings/<version>` instead of the Terraform provider's User-Agent.
+- The overview page follows the Pulumi Registry layout: installation for every language, a minimal example, and the configuration reference.
+- The schema logo is now an SVG wordmark.
+
+## 0.1.0
 
 First release, built from the NodeRings Terraform provider.
 

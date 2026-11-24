@@ -12,7 +12,7 @@
     "license": "Apache-2.0",
     "attribution": "This Pulumi package is based on the [`noderings` Terraform Provider](https://github.com/noderings/terraform-provider-noderings).",
     "repository": "https://github.com/noderings/pulumi-noderings",
-    "logoUrl": "https://raw.githubusercontent.com/noderings/pulumi-noderings/main/docs/logo.png",
+    "logoUrl": "https://raw.githubusercontent.com/noderings/pulumi-noderings/main/docs/logo.svg",
     "pluginDownloadURL": "github://api.github.com/noderings",
     "publisher": "NodeRings",
     "meta": {
