@@ -37,6 +37,8 @@ jobs:
             sdk/go.sum
             examples/go.sum
       - uses: pulumi/actions@v6
+        with:
+          pulumi-version-file: .pulumi-version
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
@@ -96,6 +98,8 @@ jobs:
             provider/go.sum
             examples/go.sum
       - uses: pulumi/actions@v6
+        with:
+          pulumi-version-file: .pulumi-version
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
