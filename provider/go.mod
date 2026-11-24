@@ -3,7 +3,7 @@ module github.com/noderings/pulumi-noderings/provider
 go 1.26.10
 
 require (
-	github.com/noderings/terraform-provider-noderings v0.1.1-0.20261124112707-2884943c2400
+	github.com/noderings/terraform-provider-noderings v0.1.1-0.20261124132543-796d20950b1e
 	github.com/pulumi/pulumi-terraform-bridge/v3 v3.143.0
 	github.com/stretchr/testify v1.12.1
 )

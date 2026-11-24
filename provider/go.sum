@@ -391,8 +391,8 @@ github.com/natefinch/atomic v1.0.1 h1:ZPYKxkqQOx3KZ+RsbnP/YsgvxWQPGxjC0oBt2AhwV0
 github.com/natefinch/atomic v1.0.1/go.mod h1:N/D/ELrljoqDyT3rZrsUmtsuzvHkeB/wWjHV22AZRbM=
 github.com/nightlyone/lockfile v1.0.0 h1:RHep2cFKK4PonZJDdEl4GmkabuhbsRMgk/k3uAmxBiA=
 github.com/nightlyone/lockfile v1.0.0/go.mod h1:rywoIealpdNse2r832aiD9jRk8ErCatROs6LzC841CI=
-github.com/noderings/terraform-provider-noderings v0.1.1-0.20261124112707-2884943c2400 h1:nYkG1rxlfW6TqyL/y8jyg9yRnfOj6xGVRHgezU4DFlE=
-github.com/noderings/terraform-provider-noderings v0.1.1-0.20261124112707-2884943c2400/go.mod h1:BUOP728pQgWwx/2Pb5fZZWbffbL315G3zQSYw/xWB7M=
+github.com/noderings/terraform-provider-noderings v0.1.1-0.20261124132543-796d20950b1e h1:56TSgs0JCQUZYYs9EkPw4nURXozXexUt4KMfiWhS828=
+github.com/noderings/terraform-provider-noderings v0.1.1-0.20261124132543-796d20950b1e/go.mod h1:BUOP728pQgWwx/2Pb5fZZWbffbL315G3zQSYw/xWB7M=
 github.com/oklog/run v1.2.0 h1:O8x3yXwah4A73hJdlrwo/2X6J62gE5qTMusH0dvz60E=
 github.com/oklog/run v1.2.0/go.mod h1:mgDbKRSwPhJfesJ4PntqFUbKQRZ50NgmZTSPlFA0YFk=
 github.com/olekukonko/cat v0.0.0-20250911104152-50322a0618f6 h1:zrbMGy9YXpIeTnGj4EljqMiZsIcE09mmF8XsD5AYOJc=

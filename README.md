@@ -114,7 +114,7 @@ The same program in Python, Go, C# and YAML is in the [documentation](docs/_inde
 ## Reference
 
 - [API documentation](https://www.pulumi.com/registry/packages/noderings/api-docs/) on the Pulumi Registry
-- [Installation and configuration](docs/installation-configuration.md)
+- [Provider overview, installation and configuration](docs/_index.md)
 - [NodeRings documentation](https://docs.noderings.com)
 
 ## Development

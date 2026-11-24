@@ -88,3 +88,8 @@ func TestCommittedSchemaIsCurrent(t *testing.T) {
 		assert.Contains(t, schema.Functions, string(info.Tok), "schema is missing %s; run make tfgen", name)
 	}
 }
+
+// The API should see Pulumi traffic as Pulumi, not as Terraform.
+func TestUserAgentNamesPulumi(t *testing.T) {
+	assert.Regexp(t, `^pulumi-noderings/\S+ \(\+https://www\.pulumi\.com/registry/packages/noderings/\)$`, userAgent())
+}
