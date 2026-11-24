@@ -1,2 +1,2 @@
-// A Pulumi package for ordering and managing virtual machines, DNS, firewalls, game servers and access control on the NodeRings cloud marketplace.
+// A Pulumi package for the NodeRings infrastructure marketplace: order and manage compute, networking, DNS, game servers, access control and more.
 package noderings
