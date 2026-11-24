@@ -1,0 +1,583 @@
+{
+    "auto-aliasing": {
+        "resources": {
+            "noderings_dns_geo_record": {
+                "current": "noderings:index/dnsGeoRecord:DnsGeoRecord"
+            },
+            "noderings_dns_record": {
+                "current": "noderings:index/dnsRecord:DnsRecord",
+                "fields": {
+                    "records": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_dns_zone": {
+                "current": "noderings:index/dnsZone:DnsZone",
+                "fields": {
+                    "nameservers": {
+                        "maxItemsOne": false
+                    },
+                    "unicast_nameservers": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_dns_zone_dnssec": {
+                "current": "noderings:index/dnsZoneDnssec:DnsZoneDnssec"
+            },
+            "noderings_environment_variable": {
+                "current": "noderings:index/environmentVariable:EnvironmentVariable"
+            },
+            "noderings_firewall_address_group": {
+                "current": "noderings:index/firewallAddressGroup:FirewallAddressGroup",
+                "fields": {
+                    "cidrs": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_firewall_ruleset": {
+                "current": "noderings:index/firewallRuleset:FirewallRuleset",
+                "fields": {
+                    "attached_vm_hostnames": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_firewall_ruleset_attachment": {
+                "current": "noderings:index/firewallRulesetAttachment:FirewallRulesetAttachment"
+            },
+            "noderings_firewall_ruleset_rules": {
+                "current": "noderings:index/firewallRulesetRules:FirewallRulesetRules",
+                "fields": {
+                    "rule": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "destination": {
+                                    "fields": {
+                                        "address_group_ids": {
+                                            "maxItemsOne": false
+                                        },
+                                        "cidrs": {
+                                            "maxItemsOne": false
+                                        },
+                                        "vm_tags": {
+                                            "maxItemsOne": false
+                                        }
+                                    }
+                                },
+                                "source": {
+                                    "fields": {
+                                        "address_group_ids": {
+                                            "maxItemsOne": false
+                                        },
+                                        "cidrs": {
+                                            "maxItemsOne": false
+                                        },
+                                        "vm_tags": {
+                                            "maxItemsOne": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "noderings_game_server": {
+                "current": "noderings:index/gameServer:GameServer"
+            },
+            "noderings_game_server_allocation": {
+                "current": "noderings:index/gameServerAllocation:GameServerAllocation"
+            },
+            "noderings_game_server_backup": {
+                "current": "noderings:index/gameServerBackup:GameServerBackup"
+            },
+            "noderings_game_server_database": {
+                "current": "noderings:index/gameServerDatabase:GameServerDatabase"
+            },
+            "noderings_game_server_schedule": {
+                "current": "noderings:index/gameServerSchedule:GameServerSchedule",
+                "fields": {
+                    "task": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_group": {
+                "current": "noderings:index/group:Group"
+            },
+            "noderings_group_membership": {
+                "current": "noderings:index/groupMembership:GroupMembership",
+                "fields": {
+                    "service_account_ids": {
+                        "maxItemsOne": false
+                    },
+                    "user_ids": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_role": {
+                "current": "noderings:index/role:Role",
+                "fields": {
+                    "permission_ids": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_role_assignment": {
+                "current": "noderings:index/roleAssignment:RoleAssignment"
+            },
+            "noderings_secret": {
+                "current": "noderings:index/secret:Secret"
+            },
+            "noderings_ssh_key": {
+                "current": "noderings:index/sshKey:SshKey"
+            },
+            "noderings_virtual_machine": {
+                "current": "noderings:index/virtualMachine:VirtualMachine",
+                "fields": {
+                    "additional_ipv4": {
+                        "maxItemsOne": false
+                    },
+                    "capabilities": {
+                        "maxItemsOne": false
+                    },
+                    "ssh_key_ids": {
+                        "maxItemsOne": false
+                    },
+                    "tags": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_virtual_machine_additional_ip": {
+                "current": "noderings:index/virtualMachineAdditionalIp:VirtualMachineAdditionalIp"
+            },
+            "noderings_virtual_machine_backup": {
+                "current": "noderings:index/virtualMachineBackup:VirtualMachineBackup"
+            },
+            "noderings_virtual_machine_snapshot": {
+                "current": "noderings:index/virtualMachineSnapshot:VirtualMachineSnapshot"
+            }
+        },
+        "datasources": {
+            "noderings_credit_balance": {
+                "current": "noderings:index/getCreditBalance:getCreditBalance"
+            },
+            "noderings_distros": {
+                "current": "noderings:index/getDistros:getDistros",
+                "fields": {
+                    "distros": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_dns_zone": {
+                "current": "noderings:index/getDnsZone:getDnsZone",
+                "fields": {
+                    "nameservers": {
+                        "maxItemsOne": false
+                    },
+                    "unicast_nameservers": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_entitlements": {
+                "current": "noderings:index/getEntitlements:getEntitlements",
+                "fields": {
+                    "rules": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_firewall_address_group": {
+                "current": "noderings:index/getFirewallAddressGroup:getFirewallAddressGroup",
+                "fields": {
+                    "cidrs": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_firewall_ruleset": {
+                "current": "noderings:index/getFirewallRuleset:getFirewallRuleset",
+                "fields": {
+                    "attached_vm_hostnames": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_firewall_rulesets": {
+                "current": "noderings:index/getFirewallRulesets:getFirewallRulesets",
+                "fields": {
+                    "rulesets": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "attached_vm_hostnames": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "noderings_game_server": {
+                "current": "noderings:index/getGameServer:getGameServer"
+            },
+            "noderings_game_server_games": {
+                "current": "noderings:index/getGameServerGames:getGameServerGames",
+                "fields": {
+                    "games": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "variables": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "variables": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_game_server_resources": {
+                "current": "noderings:index/getGameServerResources:getGameServerResources"
+            },
+            "noderings_game_server_startup": {
+                "current": "noderings:index/getGameServerStartup:getGameServerStartup",
+                "fields": {
+                    "docker_images": {
+                        "maxItemsOne": false
+                    },
+                    "variables": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_game_servers": {
+                "current": "noderings:index/getGameServers:getGameServers",
+                "fields": {
+                    "game_servers": {
+                        "maxItemsOne": false
+                    },
+                    "ids": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_instant_app": {
+                "current": "noderings:index/getInstantApp:getInstantApp",
+                "fields": {
+                    "categories": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_instant_apps": {
+                "current": "noderings:index/getInstantApps:getInstantApps",
+                "fields": {
+                    "categories": {
+                        "maxItemsOne": false
+                    },
+                    "instant_apps": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "categories": {
+                                    "maxItemsOne": false
+                                },
+                                "variables": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "noderings_marketplace_addon": {
+                "current": "noderings:index/getMarketplaceAddon:getMarketplaceAddon",
+                "fields": {
+                    "compatible_plan_codes": {
+                        "maxItemsOne": false
+                    },
+                    "prices": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_marketplace_offer": {
+                "current": "noderings:index/getMarketplaceOffer:getMarketplaceOffer",
+                "fields": {
+                    "capabilities": {
+                        "maxItemsOne": false
+                    },
+                    "prices": {
+                        "maxItemsOne": false
+                    },
+                    "require_capabilities": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_marketplace_offers": {
+                "current": "noderings:index/getMarketplaceOffers:getMarketplaceOffers",
+                "fields": {
+                    "offers": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "capabilities": {
+                                    "maxItemsOne": false
+                                },
+                                "prices": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "require_capabilities": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_marketplace_plan": {
+                "current": "noderings:index/getMarketplacePlan:getMarketplacePlan",
+                "fields": {
+                    "prices": {
+                        "maxItemsOne": false
+                    },
+                    "regions": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_marketplace_plan_codes": {
+                "current": "noderings:index/getMarketplacePlanCodes:getMarketplacePlanCodes",
+                "fields": {
+                    "plan_codes": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_marketplace_provider": {
+                "current": "noderings:index/getMarketplaceProvider:getMarketplaceProvider",
+                "fields": {
+                    "capabilities": {
+                        "maxItemsOne": false
+                    },
+                    "cities": {
+                        "maxItemsOne": false
+                    },
+                    "plans": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "prices": {
+                                    "maxItemsOne": false
+                                },
+                                "regions": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "noderings_marketplace_providers": {
+                "current": "noderings:index/getMarketplaceProviders:getMarketplaceProviders",
+                "fields": {
+                    "providers": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "capabilities": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "noderings_marketplace_regions": {
+                "current": "noderings:index/getMarketplaceRegions:getMarketplaceRegions",
+                "fields": {
+                    "regions": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_organization": {
+                "current": "noderings:index/getOrganization:getOrganization"
+            },
+            "noderings_permission": {
+                "current": "noderings:index/getPermission:getPermission"
+            },
+            "noderings_permissions": {
+                "current": "noderings:index/getPermissions:getPermissions",
+                "fields": {
+                    "ids": {
+                        "maxItemsOne": false
+                    },
+                    "permissions": {
+                        "maxItemsOne": false
+                    },
+                    "services": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_role": {
+                "current": "noderings:index/getRole:getRole",
+                "fields": {
+                    "permission_ids": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_roles": {
+                "current": "noderings:index/getRoles:getRoles",
+                "fields": {
+                    "roles": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "permission_ids": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "noderings_ssh_key": {
+                "current": "noderings:index/getSshKey:getSshKey"
+            },
+            "noderings_storefront": {
+                "current": "noderings:index/getStorefront:getStorefront",
+                "fields": {
+                    "faqs": {
+                        "maxItemsOne": false
+                    },
+                    "featured_plan_ids": {
+                        "maxItemsOne": false
+                    },
+                    "highlights": {
+                        "maxItemsOne": false
+                    },
+                    "social_urls": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_subscription": {
+                "current": "noderings:index/getSubscription:getSubscription"
+            },
+            "noderings_users": {
+                "current": "noderings:index/getUsers:getUsers",
+                "fields": {
+                    "emails": {
+                        "maxItemsOne": false
+                    },
+                    "ids": {
+                        "maxItemsOne": false
+                    },
+                    "users": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_virtual_machine": {
+                "current": "noderings:index/getVirtualMachine:getVirtualMachine",
+                "fields": {
+                    "additional_ipv4": {
+                        "maxItemsOne": false
+                    },
+                    "capabilities": {
+                        "maxItemsOne": false
+                    },
+                    "tags": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_virtual_machine_backups": {
+                "current": "noderings:index/getVirtualMachineBackups:getVirtualMachineBackups",
+                "fields": {
+                    "backups": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_virtual_machine_snapshots": {
+                "current": "noderings:index/getVirtualMachineSnapshots:getVirtualMachineSnapshots",
+                "fields": {
+                    "snapshots": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_virtual_machine_tags": {
+                "current": "noderings:index/getVirtualMachineTags:getVirtualMachineTags",
+                "fields": {
+                    "tags": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "noderings_virtual_machines": {
+                "current": "noderings:index/getVirtualMachines:getVirtualMachines",
+                "fields": {
+                    "tags": {
+                        "maxItemsOne": false
+                    },
+                    "virtual_machines": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "tags": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "auto-settings": {},
+    "default-resource-schema-fixups": {
+        "resources": {
+            "noderings_dns_geo_record": {},
+            "noderings_dns_record": {},
+            "noderings_dns_zone": {},
+            "noderings_dns_zone_dnssec": {},
+            "noderings_environment_variable": {},
+            "noderings_firewall_address_group": {},
+            "noderings_firewall_ruleset": {},
+            "noderings_firewall_ruleset_attachment": {},
+            "noderings_firewall_ruleset_rules": {},
+            "noderings_game_server": {},
+            "noderings_game_server_allocation": {},
+            "noderings_game_server_backup": {},
+            "noderings_game_server_database": {},
+            "noderings_game_server_schedule": {},
+            "noderings_group": {},
+            "noderings_group_membership": {},
+            "noderings_role": {},
+            "noderings_role_assignment": {},
+            "noderings_secret": {},
+            "noderings_ssh_key": {},
+            "noderings_virtual_machine": {},
+            "noderings_virtual_machine_additional_ip": {},
+            "noderings_virtual_machine_backup": {},
+            "noderings_virtual_machine_snapshot": {}
+        }
+    }
+}

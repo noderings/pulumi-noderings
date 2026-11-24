@@ -1,0 +1,7 @@
+name: noderings-dns-go
+runtime: go
+description: A DNS zone and two records on NodeRings, in Go.
+config:
+  zone:
+    type: string
+    description: Domain to host, for example example.com.

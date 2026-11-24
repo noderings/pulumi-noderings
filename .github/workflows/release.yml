@@ -1,0 +1,87 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: write
+  id-token: write
+
+env:
+  PULUMI_SKIP_UPDATE_CHECK: "1"
+
+jobs:
+  plugin:
+    name: Provider plugin
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: provider/go.mod
+          cache-dependency-path: provider/go.sum
+      - uses: goreleaser/goreleaser-action@v6
+        with:
+          version: "~> v2"
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  go-sdk:
+    name: Go SDK tag
+    needs: plugin
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tag sdk/${{ github.ref_name }}
+        run: |
+          git tag "sdk/${GITHUB_REF_NAME}" "${GITHUB_SHA}"
+          git push origin "sdk/${GITHUB_REF_NAME}"
+
+  sdks:
+    name: Publish SDKs
+    needs: plugin
+    runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+      NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pulumi/actions@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: https://registry.npmjs.org
+      - run: npm install -g yarn@1.22.22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install build twine
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Build
+        run: make VERSION="${GITHUB_REF_NAME#v}" build_nodejs build_python build_dotnet
+
+      - name: npm
+        if: env.NPM_TOKEN != ''
+        working-directory: sdk/nodejs/bin
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: PyPI
+        if: env.PYPI_API_TOKEN != ''
+        run: twine upload --non-interactive -u __token__ -p "$PYPI_API_TOKEN" sdk/python/bin/dist/*
+
+      - name: NuGet
+        if: env.NUGET_API_KEY != ''
+        working-directory: sdk/dotnet
+        run: |
+          dotnet pack -c Release --no-build /p:Version="${GITHUB_REF_NAME#v}" -o nupkg
+          dotnet nuget push "nupkg/*.nupkg" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate

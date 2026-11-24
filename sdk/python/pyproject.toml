@@ -1,0 +1,22 @@
+[project]
+  name = "pulumi_noderings"
+  description = "A Pulumi package for ordering and managing virtual machines, DNS, firewalls, game servers and access control on the NodeRings cloud marketplace."
+  dependencies = ["packaging>=24.0", "pulumi>=3.269.0,<4.0.0", "semver>=2.8.1", "typing-extensions>=4.11,<5; python_version < \"3.11\""]
+  keywords = ["noderings", "vps", "dns", "category/cloud"]
+  readme = "README.md"
+  requires-python = ">=3.9"
+  version = "0.0.0"
+  [project.license]
+    text = "Apache-2.0"
+  [project.urls]
+    Homepage = "https://noderings.com"
+    Repository = "https://github.com/noderings/pulumi-noderings"
+
+[build-system]
+  requires = ["setuptools>=61.0"]
+  build-backend = "setuptools.build_meta"
+
+[tool]
+  [tool.setuptools]
+    [tool.setuptools.package-data]
+      pulumi_noderings = ["py.typed", "pulumi-plugin.json"]

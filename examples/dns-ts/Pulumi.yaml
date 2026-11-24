@@ -1,0 +1,7 @@
+name: noderings-dns-ts
+runtime: nodejs
+description: A DNS zone with mail records, a GeoDNS answer and DNSSEC on NodeRings.
+config:
+  zone:
+    type: string
+    description: Domain to host, for example example.com.
