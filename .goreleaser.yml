@@ -38,5 +38,10 @@ release:
   github:
     owner: noderings
     name: pulumi-noderings
+  # release-please creates the release as a draft (with the changelog) when it
+  # pushes the tag. Reuse that draft, keep its notes, and publish it once every
+  # asset is uploaded.
+  use_existing_draft: true
+  mode: keep-existing
   extra_files:
     - glob: provider/cmd/pulumi-resource-noderings/schema.json
