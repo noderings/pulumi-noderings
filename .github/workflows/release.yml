@@ -29,6 +29,9 @@ concurrency:
   cancel-in-progress: false
 
 env:
+  # Pulumi downloads plugins (such as the terraform converter tfgen uses for
+  # examples) from the GitHub API; unauthenticated calls hit the rate limit.
+  GITHUB_TOKEN: ${{ github.token }}
   PULUMI_SKIP_UPDATE_CHECK: "1"
   YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
   TAG: ${{ github.ref_name }}
