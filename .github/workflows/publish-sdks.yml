@@ -28,28 +28,28 @@ jobs:
     name: Build SDKs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ env.TAG }}
       - uses: pulumi/actions@v6
         with:
           pulumi-version-file: .pulumi-version
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
       - run: npm install -g yarn@1.22.22
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - run: pip install build
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: "8.0.x"
       - name: Build
         run: |
           make VERSION="${TAG#v}" build_nodejs build_python build_dotnet
           cd sdk/dotnet && dotnet pack -c Release --no-build /p:Version="${TAG#v}" -o nupkg
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: sdks
           path: |
@@ -64,10 +64,10 @@ jobs:
     env:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: sdks
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
           registry-url: https://registry.npmjs.org
@@ -85,7 +85,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: pypi
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: sdks
       - uses: pypa/gh-action-pypi-publish@release/v1
@@ -99,10 +99,10 @@ jobs:
     if: vars.NUGET_USER != ''
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: sdks
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: "8.0.x"
       - uses: NuGet/login@v1

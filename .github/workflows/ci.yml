@@ -28,8 +28,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
         with:
           go-version-file: provider/go.mod
           cache-dependency-path: |
@@ -39,15 +39,15 @@ jobs:
       - uses: pulumi/actions@v6
         with:
           pulumi-version-file: .pulumi-version
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
       - run: npm install -g yarn@1.22.22
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - run: pip install build
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: "8.0.x"
 
@@ -68,7 +68,7 @@ jobs:
       - run: make lint
       - run: make build_sdks
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: build
           retention-days: 3
@@ -90,8 +90,8 @@ jobs:
       PULUMI_CONFIG_PASSPHRASE: ci
       PULUMI_BACKEND_URL: file://${{ github.workspace }}/.pulumi-state
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
         with:
           go-version-file: provider/go.mod
           cache-dependency-path: |
@@ -100,15 +100,15 @@ jobs:
       - uses: pulumi/actions@v6
         with:
           pulumi-version-file: .pulumi-version
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
       - run: npm install -g yarn@1.22.22
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - run: pip install build
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: build
       - name: Prepare
