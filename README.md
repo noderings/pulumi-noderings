@@ -5,8 +5,12 @@
 [![PyPI](https://img.shields.io/pypi/v/pulumi-noderings)](https://pypi.org/project/pulumi-noderings/)
 [![NuGet](https://img.shields.io/nuget/v/NodeRings.Pulumi)](https://www.nuget.org/packages/NodeRings.Pulumi)
 [![Go Reference](https://pkg.go.dev/badge/github.com/noderings/pulumi-noderings/sdk/go/noderings.svg)](https://pkg.go.dev/github.com/noderings/pulumi-noderings/sdk/go/noderings)
+[![Pulumi Registry](https://img.shields.io/badge/pulumi-noderings-8A3391.svg?logo=pulumi)](https://www.pulumi.com/registry/packages/noderings/)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
 The NodeRings provider lets you manage [NodeRings](https://noderings.com) resources with Pulumi. NodeRings is an infrastructure marketplace: independent hosting providers sell compute, GPU, storage, network and more, and you buy and manage them through one account and one API.
+
+New to it? The step-by-step guide [How to use Pulumi on NodeRings to order a VPS](https://noderings.com/blog/pulumi-vps) walks through a first run.
 
 With this provider you can:
 
