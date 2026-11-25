@@ -58,22 +58,38 @@ Test zones and servers get random names, and every test destroys what it created
 
 ## Releasing
 
-Push a tag such as `v0.2.0`. Two workflows run:
+Releases are automated; nobody pushes tags or builds by hand. Use [Conventional Commits](https://www.conventionalcommits.org/) for commit messages and pull request titles (pull requests are squash-merged, so the title becomes the commit):
 
-- `release.yml` builds the plugin for every platform, attaches it to a GitHub release, and tags the Go SDK as `sdk/v0.2.0`.
-- `publish-sdks.yml` publishes the SDKs to npm, PyPI and NuGet. It can also be run by hand from the Actions tab with an existing tag.
+| Prefix | Changelog section | Version bump (before 1.0) |
+|---|---|---|
+| `feat:` | Features | minor |
+| `fix:` | Bug Fixes | patch |
+| `perf:` | Performance | patch |
+| `deps:` | Dependencies | patch |
+| `docs:` | Documentation | patch |
+| `chore:`, `ci:`, `test:`, `refactor:`, `build:` | not listed | none |
+
+1. [release-please](https://github.com/googleapis/release-please) keeps one open pull request, `chore: release X.Y.Z`, that updates `CHANGELOG.md`, `.release-please-manifest.json` and the version shown in `docs/`.
+2. Merging it pushes the `vX.Y.Z` tag and a draft GitHub release with the changelog.
+3. The tag starts `.github/workflows/release.yml`:
+   - GoReleaser builds the plugin for every platform, uploads it and `schema.json` to the draft, and publishes the release, with a build provenance attestation.
+   - The Go SDK is tagged `sdk/vX.Y.Z`.
+   - The npm, PyPI and NuGet SDKs are built with that version and published, each with provenance.
+4. The Pulumi Registry picks the release up on its twice-daily check and opens its own pull request with the new docs.
+
+A registry that is not set up is skipped with a warning, so the rest still publish. To republish a tag, run **Release** from the Actions tab and pick the tag under "Use workflow from"; versions already on a registry are skipped.
 
 ### One-time registry setup
 
-PyPI and NuGet use [trusted publishing](https://docs.pypi.org/trusted-publishers/): they trust `publish-sdks.yml` in this repository, so no tokens are stored.
+The publish jobs run in the GitHub environments `npm`, `pypi` and `nuget`, which only accept `v*` tags. Each registry trusts `release.yml` in this repository, so no long-lived tokens are needed after the first npm publish.
 
-| Registry | Setup | Then set |
+| Registry | Setup | Then set (Settings → Secrets and variables → Actions) |
 |---|---|---|
-| PyPI | Account, then Publishing, then "Add a new pending publisher": project `pulumi-noderings`, owner `noderings`, repository `pulumi-noderings`, workflow `publish-sdks.yml`, environment `pypi` | Repository variable `PYPI_TRUSTED_PUBLISHING` = `true` |
-| NuGet | Account, then Trusted Publishing, then "Add policy": owner `noderings`, repository `pulumi-noderings`, workflow `publish-sdks.yml` | Repository variable `NUGET_USER` = your nuget.org user name |
-| npm | Organization `noderings`, then a granular access token with read and write on its packages | Repository secret `NPM_TOKEN` |
+| PyPI | Account → Publishing → Add a new pending publisher: project `pulumi-noderings`, owner `noderings`, repository `pulumi-noderings`, workflow `release.yml`, environment `pypi` | Variable `PYPI_TRUSTED_PUBLISHING` = `true` |
+| NuGet | Account → Trusted Publishing → Create: repository owner `noderings`, repository `pulumi-noderings`, workflow file `release.yml`, environment `nuget` | Variable `NUGET_USER` = the nuget.org user name that owns the policy. (Or secret `NUGET_API_KEY` instead.) |
+| npm | Organization `noderings`. npm can only add a trusted publisher to a package that already exists, so the first version is published with a short-lived granular token. Then on the package's Settings → Trusted publishing → GitHub Actions: organization `noderings`, repository `pulumi-noderings`, workflow `release.yml`, environment `npm`, allow `npm publish` | First release: secret `NPM_TOKEN`. Afterwards: delete `NPM_TOKEN` and the token on npmjs.com, set variable `NPM_TRUSTED_PUBLISHING` = `true` |
 
-A registry that is not set up is skipped, so the rest still publish.
+`NPM_TOKEN` wins over trusted publishing while it is set. A new npm trusted publisher must complete its first publish within two days or it expires, so add it right before a release.
 
 ## Code of conduct
 
