@@ -93,16 +93,18 @@ pulumi package add noderings
 
 Declare the provider in your program, then run `pulumi install`:
 
+<!-- x-release-please-start-version -->
 ```hcl
 terraform {
   required_providers {
     noderings = {
-      source  = "noderings/noderings"
-      version = "~> 0.1"
+      source  = "pulumi/noderings"
+      version = "0.1.1"
     }
   }
 }
 ```
+<!-- x-release-please-end -->
 
 ```bash
 pulumi install

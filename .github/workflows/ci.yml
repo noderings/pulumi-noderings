@@ -77,6 +77,42 @@ jobs:
             sdk/nodejs/bin
             sdk/python/bin
 
+  release-config:
+    name: Release config and docs
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: provider/go.mod
+          cache-dependency-path: provider/go.sum
+      - name: Build the plugin archives (snapshot, nothing published)
+        uses: goreleaser/goreleaser-action@v7
+        with:
+          version: "~> v2"
+          args: release --snapshot --clean --skip=publish
+      - name: Check the plugin archives
+        run: |
+          # Pulumi downloads pulumi-resource-noderings-v<version>-<os>-<arch>.tar.gz
+          for p in linux-amd64 linux-arm64 darwin-amd64 darwin-arm64 windows-amd64 windows-arm64; do
+            ls dist/pulumi-resource-noderings-v*-"${p}".tar.gz
+          done
+      - name: Check the Pulumi Registry docs
+        run: |
+          # The Registry needs YAML front matter with title, meta_desc and layout: package.
+          for f in docs/_index.md docs/installation-configuration.md; do
+            head -1 "$f" | grep -qx -- '---' || { echo "::error file=$f::missing front matter"; exit 1; }
+            for k in title meta_desc layout; do
+              sed -n '2,/^---$/p' "$f" | grep -q "^${k}: " || { echo "::error file=$f::front matter lacks ${k}"; exit 1; }
+            done
+          done
+          grep -q '"displayName": "NodeRings"' provider/cmd/pulumi-resource-noderings/schema.json
+          python3 -c "import json,sys; d=json.load(open('provider/cmd/pulumi-resource-noderings/schema.json')); sys.exit('schema.json must not set version' if 'version' in d else 0)"
+          python3 -c "import json; json.load(open('release-please-config.json')); json.load(open('.release-please-manifest.json'))"
+
   integration:
     name: Integration tests (live API)
     needs: build

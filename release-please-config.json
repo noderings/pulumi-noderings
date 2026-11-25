@@ -1,0 +1,33 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "release-type": "go",
+  "include-v-in-tag": true,
+  "include-component-in-tag": false,
+  "bump-minor-pre-major": true,
+  "bump-patch-for-minor-pre-major": false,
+  "draft": true,
+  "force-tag-creation": true,
+  "pull-request-title-pattern": "chore: release ${version}",
+  "changelog-sections": [
+    { "type": "feat", "section": "Features" },
+    { "type": "fix", "section": "Bug Fixes" },
+    { "type": "perf", "section": "Performance" },
+    { "type": "deps", "section": "Dependencies" },
+    { "type": "docs", "section": "Documentation" },
+    { "type": "refactor", "section": "Other", "hidden": true },
+    { "type": "chore", "section": "Other", "hidden": true },
+    { "type": "ci", "section": "Other", "hidden": true },
+    { "type": "test", "section": "Other", "hidden": true },
+    { "type": "build", "section": "Other", "hidden": true }
+  ],
+  "packages": {
+    ".": {
+      "package-name": "pulumi-noderings",
+      "changelog-path": "CHANGELOG.md",
+      "extra-files": [
+        { "type": "generic", "path": "docs/_index.md" },
+        { "type": "generic", "path": "docs/installation-configuration.md" }
+      ]
+    }
+  }
+}

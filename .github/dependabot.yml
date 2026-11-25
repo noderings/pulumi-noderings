@@ -1,9 +1,17 @@
+# Commit messages use Conventional Commits so release-please can sort them:
+# "deps" updates (Go modules built into the provider) show up in the
+# changelog, "ci" updates (GitHub Actions) do not.
 version: 2
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Etc/UTC"
+    commit-message:
+      prefix: "ci"
     groups:
       "github-actions":
         patterns:
@@ -12,6 +20,11 @@ updates:
     directory: "/provider"
     schedule:
       interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Etc/UTC"
+    commit-message:
+      prefix: "deps"
     groups:
       "gomod":
         patterns:
