@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.1.2](https://github.com/noderings/pulumi-noderings/compare/v0.1.1...v0.1.2) (2026-11-26)
+
+
+### Documentation
+
+* add community health files ([de3e2f0](https://github.com/noderings/pulumi-noderings/commit/de3e2f0ff48af125ed08d0fe06fd34a11032117e))
+* add README badges and a link to the how-to guide ([9371366](https://github.com/noderings/pulumi-noderings/commit/9371366e3cb68410780f3249ad8c455431c9713c))
+* describe NodeRings as a marketplace for any infrastructure ([#1](https://github.com/noderings/pulumi-noderings/issues/1)) ([032d029](https://github.com/noderings/pulumi-noderings/commit/032d029b91e2f7e52aebef6c6e16eb3b5dcaf07e))
+
 ## 0.1.1
 
 - The provider identifies itself to the NodeRings API as `pulumi-noderings/<version>` instead of the Terraform provider's User-Agent.
