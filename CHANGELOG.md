@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4](https://github.com/noderings/pulumi-noderings/compare/v0.1.3...v0.1.4) (2026-11-26)
+
+
+### Other
+
+* release 0.1.4 via trusted publishing ([b1fc22a](https://github.com/noderings/pulumi-noderings/commit/b1fc22a5d812a044b8bcf62b239a538e31364673))
+
 ## [0.1.3](https://github.com/noderings/pulumi-noderings/compare/v0.1.2...v0.1.3) (2026-11-26)
 
 
