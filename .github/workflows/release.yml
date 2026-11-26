@@ -170,6 +170,7 @@ jobs:
         if: steps.setup.outputs.mode != 'skip'
         with:
           name: sdks
+          path: sdk
       - uses: actions/setup-node@v7
         if: steps.setup.outputs.mode != 'skip'
         with:
@@ -223,6 +224,7 @@ jobs:
         if: steps.setup.outputs.ready == 'true'
         with:
           name: sdks
+          path: sdk
       - uses: pypa/gh-action-pypi-publish@release/v1
         if: steps.setup.outputs.ready == 'true'
         with:
@@ -257,6 +259,7 @@ jobs:
         if: steps.setup.outputs.mode != 'skip'
         with:
           name: sdks
+          path: sdk
       - uses: actions/setup-dotnet@v6
         if: steps.setup.outputs.mode != 'skip'
         with:
