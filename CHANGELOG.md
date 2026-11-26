@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.3](https://github.com/noderings/pulumi-noderings/compare/v0.1.2...v0.1.3) (2026-11-26)
+
+
+### Bug Fixes
+
+* **ci:** keep GoReleaser from reading the sdk/ Go tags as release versions ([92fa474](https://github.com/noderings/pulumi-noderings/commit/92fa4742690ffc7016c4355c8eb325b8a07173c5))
+* **ci:** restore the SDK artifacts under sdk/ before publishing ([8234a34](https://github.com/noderings/pulumi-noderings/commit/8234a343a95e2a00d59b46cdeb950a7d9b54bc6e))
+
 ## [0.1.2](https://github.com/noderings/pulumi-noderings/compare/v0.1.1...v0.1.2) (2026-11-26)
 
 
