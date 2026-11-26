@@ -5,6 +5,12 @@ version: 2
 
 project_name: pulumi-resource-noderings
 
+# The Go SDK tags (sdk/vX.Y.Z) are not plugin releases; GoReleaser must not
+# pick them as the current or previous version.
+git:
+  ignore_tags:
+    - "sdk/*"
+
 before:
   hooks:
     - make provider/cmd/pulumi-resource-noderings/schema-embed.json
