@@ -1,10 +1,10 @@
 ---
 title: NodeRings
-meta_desc: Use the Pulumi NodeRings provider to order and manage compute, networking, DNS, game servers, access control and more on the NodeRings infrastructure marketplace.
+meta_desc: Use the Pulumi NodeRings provider to order and manage compute, networking, DNS, access control and more on the NodeRings infrastructure marketplace.
 layout: package
 ---
 
-The NodeRings provider for Pulumi lets you manage [NodeRings](https://noderings.com) resources as part of your Pulumi programs. NodeRings is an infrastructure marketplace where independent hosting providers sell compute, GPU, storage, network and more through one account and one API. With this provider you can order servers by size and city, keep DNS zones, records, GeoDNS answers and DNSSEC in code, put firewalls in front of servers, run game servers with their backups and databases, and manage SSH keys, roles, groups and secrets.
+The NodeRings provider for Pulumi lets you manage [NodeRings](https://noderings.com) resources as part of your Pulumi programs. NodeRings is an infrastructure marketplace where independent hosting providers sell compute, GPU, storage, network and more through one account and one API. With this provider you can order servers by size and city, keep DNS zones, records, GeoDNS answers and DNSSEC in code, put firewalls in front of servers, and manage SSH keys, roles, groups and secrets.
 
 ## Installation
 
@@ -521,7 +521,6 @@ A replacement deletes the old server, and with it its IP addresses and disk. Set
 | Servers | `VirtualMachine`, `VirtualMachineBackup`, `VirtualMachineSnapshot`, `VirtualMachineAdditionalIp` |
 | DNS | `DnsZone`, `DnsRecord`, `DnsGeoRecord`, `DnsZoneDnssec` |
 | Firewall | `FirewallRuleset`, `FirewallRulesetRules`, `FirewallRulesetAttachment`, `FirewallAddressGroup` |
-| Game servers | `GameServer`, `GameServerAllocation`, `GameServerBackup`, `GameServerDatabase`, `GameServerSchedule` |
 | Access | `SshKey`, `Role`, `RoleAssignment`, `Group`, `GroupMembership`, `Secret`, `EnvironmentVariable` |
 
 Functions such as `getMarketplaceOffer`, `getMarketplaceOffers`, `getDistros`, `getVirtualMachines` and `getCreditBalance` read the catalog and your account. Every resource can be adopted with `pulumi import`, for example `pulumi import noderings:index/dnsRecord:DnsRecord www <zone id>/www/A`.

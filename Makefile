@@ -69,6 +69,7 @@ generate_sdks:
 		pulumi package gen-sdk $(SCHEMA) --language $$lang --out sdk/ || exit 1; \
 	done
 	cd sdk && go mod tidy
+	python3 scripts/apply-dotnet-nuget-readme.py
 
 build_sdks: build_nodejs build_python build_go build_dotnet
 
@@ -92,7 +93,9 @@ build_go:
 	cd sdk && go build ./...
 
 # NuGet only accepts PNG or JPEG icons; codegen copies the schema's SVG logo.
+# The NuGet README is kept in docs/nuget-README.md and reapplied after SDK generation.
 build_dotnet:
+	python3 scripts/apply-dotnet-nuget-readme.py
 	cd sdk/dotnet && \
 		cp ../../docs/logo.png logo.png && \
 		echo "$(VERSION)" > version.txt && \

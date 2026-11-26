@@ -55,7 +55,7 @@ func Provider() tfbridge.ProviderInfo {
 		LogoURL:     "https://raw.githubusercontent.com/noderings/pulumi-noderings/main/docs/logo.svg",
 		// Pulumi downloads the provider plugin from this repository's GitHub releases.
 		PluginDownloadURL: "github://api.github.com/noderings",
-		Description:       "A Pulumi package for the NodeRings infrastructure marketplace: order and manage compute, networking, DNS, game servers, access control and more.",
+		Description:       "A Pulumi package for the NodeRings infrastructure marketplace: order and manage compute, networking, DNS, access control and more.",
 		Keywords:          []string{"noderings", "vps", "dns", "category/cloud"},
 		License:           "Apache-2.0",
 		Homepage:          "https://noderings.com",
