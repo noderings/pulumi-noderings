@@ -17,7 +17,6 @@ With this provider you can:
 - order a virtual machine by size and city, billed by the hour, and get its IP address back in the same program
 - keep DNS zones, records, GeoDNS answers and DNSSEC in code
 - put firewalls in front of your servers, matched by address, address group or tag
-- run game servers with their allocations, schedules, backups and databases
 - manage SSH keys, roles, groups and secrets for your organization
 
 It is built from the [NodeRings Terraform provider](https://github.com/noderings/terraform-provider-noderings) with the [Pulumi Terraform bridge](https://github.com/pulumi/pulumi-terraform-bridge), so both behave the same.

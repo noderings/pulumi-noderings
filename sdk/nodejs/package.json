@@ -1,7 +1,7 @@
 {
     "name": "@noderings/pulumi",
     "version": "${VERSION}",
-    "description": "A Pulumi package for the NodeRings infrastructure marketplace: order and manage compute, networking, DNS, game servers, access control and more.",
+    "description": "A Pulumi package for the NodeRings infrastructure marketplace: order and manage compute, networking, DNS, access control and more.",
     "keywords": [
         "noderings",
         "vps",

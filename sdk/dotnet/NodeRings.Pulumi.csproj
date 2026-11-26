@@ -4,11 +4,12 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>NodeRings</Authors>
     <Company>NodeRings</Company>
-    <Description>A Pulumi package for the NodeRings infrastructure marketplace: order and manage compute, networking, DNS, game servers, access control and more.</Description>
+    <Description>A Pulumi package for the NodeRings infrastructure marketplace: order and manage compute, networking, DNS, access control and more.</Description>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://noderings.com</PackageProjectUrl>
     <RepositoryUrl>https://github.com/noderings/pulumi-noderings</RepositoryUrl>
     <PackageIcon>logo.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
 
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
@@ -57,4 +58,7 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 </Project>
