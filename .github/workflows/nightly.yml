@@ -1,0 +1,75 @@
+# Nightly live example tests against the NodeRings API. Runs only when the
+# NODERINGS_TOKEN secret is set; otherwise the job skips with a notice and
+# succeeds. NODERINGS_TEST_BILLED is not set, so examples that would order a
+# billed VM skip. Other examples create and delete their own resources.
+name: Nightly live API
+
+on:
+  schedule:
+    - cron: "17 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nightly-live
+  cancel-in-progress: false
+
+jobs:
+  live:
+    name: Integration tests (live API)
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      NODERINGS_TOKEN: ${{ secrets.NODERINGS_TOKEN }}
+      PULUMI_CONFIG_PASSPHRASE: ci
+      PULUMI_BACKEND_URL: file://${{ github.workspace }}/.pulumi-state
+      GITHUB_TOKEN: ${{ github.token }}
+      PULUMI_SKIP_UPDATE_CHECK: "1"
+      YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+    steps:
+      - name: Skip when NODERINGS_TOKEN is not set
+        if: env.NODERINGS_TOKEN == ''
+        run: echo "::notice title=Live tests skipped::Add the repository secret NODERINGS_TOKEN (a service account token for a test organization) to run them."
+      - uses: actions/checkout@v7
+        if: env.NODERINGS_TOKEN != ''
+      - uses: actions/setup-go@v7
+        if: env.NODERINGS_TOKEN != ''
+        with:
+          go-version-file: provider/go.mod
+          cache-dependency-path: |
+            provider/go.sum
+            sdk/go.sum
+            examples/go.sum
+      - uses: pulumi/actions@v6
+        if: env.NODERINGS_TOKEN != ''
+        with:
+          pulumi-version-file: .pulumi-version
+      - uses: actions/setup-node@v7
+        if: env.NODERINGS_TOKEN != ''
+        with:
+          node-version: "22"
+      - if: env.NODERINGS_TOKEN != ''
+        run: npm install -g yarn@1.22.22
+      - uses: actions/setup-python@v7
+        if: env.NODERINGS_TOKEN != ''
+        with:
+          python-version: "3.12"
+      - if: env.NODERINGS_TOKEN != ''
+        run: pip install build
+      - name: Build the provider and Node.js SDK
+        if: env.NODERINGS_TOKEN != ''
+        run: |
+          make provider
+          make build_sdks
+      - name: Prepare
+        if: env.NODERINGS_TOKEN != ''
+        run: |
+          chmod +x bin/pulumi-resource-noderings
+          mkdir -p .pulumi-state
+          ssh-keygen -q -t ed25519 -N "" -f "$HOME/.ssh/id_ed25519"
+          cd sdk/nodejs/bin && yarn link
+      - name: Run the examples
+        if: env.NODERINGS_TOKEN != ''
+        run: cd examples && go test -v -count=1 -tags=all -timeout 80m -parallel 4 ./...
