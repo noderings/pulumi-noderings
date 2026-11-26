@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.5](https://github.com/noderings/pulumi-noderings/compare/v0.1.4...v0.1.5) (2026-11-26)
+
+
+### Bug Fixes
+
+* add NuGet README and tidy package descriptions ([#10](https://github.com/noderings/pulumi-noderings/issues/10)) ([974b774](https://github.com/noderings/pulumi-noderings/commit/974b774ed394aa3c1f8602c9eadae69ac7306501))
+
 ## [0.1.4](https://github.com/noderings/pulumi-noderings/compare/v0.1.3...v0.1.4) (2026-11-26)
 
 
