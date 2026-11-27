@@ -99,7 +99,7 @@ terraform {
   required_providers {
     noderings = {
       source  = "pulumi/noderings"
-      version = "0.1.5"
+      version = "0.1.6"
     }
   }
 }
