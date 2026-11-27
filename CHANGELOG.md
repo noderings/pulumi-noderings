@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.6](https://github.com/noderings/pulumi-noderings/compare/v0.1.5...v0.1.6) (2026-11-27)
+
+
+### Documentation
+
+* link the official Go SDK in the README ([#14](https://github.com/noderings/pulumi-noderings/issues/14)) ([70f8231](https://github.com/noderings/pulumi-noderings/commit/70f8231524bce5bb0fcc3435935ced9ce1099bf2))
+
 ## [0.1.5](https://github.com/noderings/pulumi-noderings/compare/v0.1.4...v0.1.5) (2026-11-26)
 
 

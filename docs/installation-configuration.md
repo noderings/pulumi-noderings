@@ -65,7 +65,7 @@ The provider plugin is downloaded from the [GitHub releases](https://github.com/
 
 <!-- x-release-please-start-version -->
 ```bash
-pulumi plugin install resource noderings 0.1.5 --server github://api.github.com/noderings
+pulumi plugin install resource noderings 0.1.6 --server github://api.github.com/noderings
 ```
 <!-- x-release-please-end -->
 
