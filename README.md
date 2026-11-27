@@ -128,6 +128,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for building the provider, regenerating t
 
 Report bugs and request features in [GitHub issues](https://github.com/noderings/pulumi-noderings/issues). For questions about your NodeRings account or servers, contact NodeRings support from the console.
 
+## Related
+
+The [Go SDK](https://github.com/noderings/noderings-go) is the official Go client for the NodeRings API.
+
 ## License
 
 Apache License 2.0. See [LICENSE](LICENSE) and [COPYRIGHT](COPYRIGHT).
